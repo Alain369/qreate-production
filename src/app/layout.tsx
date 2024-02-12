@@ -11,7 +11,7 @@ import { Toaster as SonnarToaster } from '@/components/ui/sonner'
 const font = DM_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Qreator',
+  title: 'Plura',
   description: 'All in one Agency Solution',
 }
 
@@ -21,7 +21,6 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
     <html
       lang="en"
       suppressHydrationWarning
@@ -41,6 +40,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-    </ClerkProvider>
   )
 }
