@@ -2,16 +2,21 @@ import { authMiddleware } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
 export default authMiddleware({
-  publicRoutes: ['/site'],
+  publicRoutes: [process.env.NEXT_PUBLIC_URL + '/site'],
   async beforeAuth(auth, req) {
-    // Vor der Authentifizierung keine spezifische Logik erforderlich
+    // Vor der Authentifizierung den Benutzer zur Landingpage weiterleiten
+    const url = new URL(process.env.NEXT_PUBLIC_URL + '/site');
+
+    if (url.pathname !== '/site') {
+      return NextResponse.redirect(process.env.NEXT_PUBLIC_URL + '/site');
+    }
   },
   async afterAuth(auth, req) {
-    const url = req.nextUrl;
+    const url = new URL(req.url);
 
-    // Wenn der Benutzer auf der Landingpage (/site) ist, leite ihn zu /agency weiter
+    // Nach der Authentifizierung den Benutzer zur Zielroute weiterleiten
     if (url.pathname === '/site') {
-      return NextResponse.redirect(new URL('/agency', req.url));
+      return NextResponse.redirect(process.env.NEXT_PUBLIC_URL + '/agency');
     }
 
     // Standardverhalten: Weiterleitung auf die angeforderte Seite
