@@ -2,7 +2,7 @@ import { authMiddleware } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
 export default authMiddleware({
-  publicRoutes: [process.env.NEXT_PUBLIC_URL + '/site'],
+  publicRoutes: [process.env.NEXT_PUBLIC_URL + 'site'],
 });
 
 export const config = {
