@@ -4,22 +4,22 @@ import { NextResponse } from 'next/server';
 export default authMiddleware({
   publicRoutes: ['/site'],
   async beforeAuth(auth, req) {
-    // Logik für vor der Authentifizierung (falls benötigt)
-    // Hier kannst du Code hinzufügen, der vor der Authentifizierung ausgeführt werden soll
+    // Vor der Authentifizierung keine spezifische Logik erforderlich
   },
   async afterAuth(auth, req) {
     const url = req.nextUrl;
 
-    if (url.pathname === '/') {
-      // Wenn der Benutzer auf der Landingpage ist, leite ihn zu /agency weiter
+    // Wenn der Benutzer auf der Landingpage (/site) ist, leite ihn zu /agency weiter
+    if (url.pathname === '/site') {
       return NextResponse.redirect(new URL('/agency', req.url));
     }
 
-    // Wenn der Benutzer nicht auf der Landingpage ist, keine Änderungen vornehmen
+    // Standardverhalten: Weiterleitung auf die angeforderte Seite
     return NextResponse.next();
   },
 });
 
 export const config = {
-  // Matcher-Konfiguration wie zuvor
+  // Routen, die von der Middleware abgedeckt werden sollen
+  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/site', '/(api|trpc)(.*)'],
 };
